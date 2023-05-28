@@ -1,0 +1,66 @@
+nodejs redis cache
+[1]
+https://www.youtube.com/watch?v=oaJq1mQ3dFI
+
+# https://gist.github.com/bradtraversy/a9dedcdf4350fd417819ee6538482aae
+
+# npm i express node-fetch redis
+http://github.com/dmajkic/redis
+
+http://github.com/dmajkic/redis/downloads
+redis-2.4.5-win32-win64.zip
+
+https://redis.io/download/
+
+https://github.com/MicrosoftArchive/redis/releases/download/win-3.0.504/Redis-x64-3.0.504.msi
+https://kasunprageethdissanayake.medium.com/installing-redis-x64-3-2-100-on-windows-and-running-redis-server-94db3a98ae3d
+
+# redis-cli
+Port (6379) 
+
+# set <key-value pair> command
+
+# set name bred
+# get name
+
+[2]
+# npm init -y
+# npm i express node-fetch redis
+# npm i -D nodemon
+
+
+-----------------------
+
+[1]
+
+Resolved: Keep await client.connect()
+
+Put data in a variable and await the response. See function:
+
+async function cache(req, res, next) {
+  const { username } = req.params;
+  const data = await client.get(username);
+  if (data !== null) {
+    res.send(setResponse(username, data));
+  } else {
+    next();
+  }
+}
+
+[2]
+
+I solved the problem : "ClientClosedError: The client is closed"
+
+Stating redis in the terminal:
+
+@pop-os:~$ redis-server
+
+adding in the code: client.connect();
+
+that is:
+
+const client = redis.createClient(REDIS_PORT)
+client.connect();
+client.on('connect', () => {
+console.log('connected');
+});
